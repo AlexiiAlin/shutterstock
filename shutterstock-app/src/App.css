@@ -70,6 +70,11 @@ h6 {
   margin: 32px 0 0;
 }
 
+.toolbar-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .toolbar {
   color: white !important;
   text-underline: none !important;

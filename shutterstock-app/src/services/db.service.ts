@@ -37,4 +37,10 @@ export default class DB {
   public set videos(value) {
     localStorage.setItem(videosKey, JSON.stringify(value));
   }
+
+  public clearDB() {
+    localStorage.setItem(imagesKey, '[]');
+    localStorage.setItem(tracksKey, '[]');
+    localStorage.setItem(videosKey, '[]');
+  }
 }
