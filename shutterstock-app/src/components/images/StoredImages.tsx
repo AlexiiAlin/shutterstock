@@ -2,8 +2,10 @@ import React from 'react';
 import '../../App.css';
 import shutterstockService from '../../services/shutterstock.service';
 import DB from "../../services/db.service";
+import {Alert, Snackbar} from "@mui/material";
 
 function StoredImages() {
+  const [open, setOpen] = React.useState(false);
   const [images, setImages] = React.useState([]);
   React.useEffect(() => {
     shutterstockService.getImagesById({ids: DB.getInstance().images}).then((res: any) => {
@@ -14,11 +16,11 @@ function StoredImages() {
 
   const handleImageClick = (imageId) => {
     DB.getInstance().images = DB.getInstance().images.filter(image => image !== imageId);
-    alert(`Image with id: ${imageId} removed succesfully!`);
     shutterstockService.getImagesById({ids: DB.getInstance().images}).then((res: any) => {
       const data = res.data;
       setImages(data);
-    })
+    });
+    setOpen(true);
   }
 
   const renderedImages = images.map((image: any, index) => {
@@ -37,7 +39,14 @@ function StoredImages() {
         alt="new"
       />
     </div>
-  })
+  });
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   return (
     <div className="App">
@@ -47,6 +56,14 @@ function StoredImages() {
           {renderedImages}
         </div>
       </div>
+      <Snackbar open={open}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                autoHideDuration={6000}
+                onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
+          Image removed successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

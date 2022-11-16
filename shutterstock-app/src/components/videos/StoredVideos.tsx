@@ -3,8 +3,10 @@ import '../../App.css';
 import shutterstockService from '../../services/shutterstock.service';
 import DB from "../../services/db.service";
 import {Delete} from "@mui/icons-material";
+import {Alert, Snackbar} from "@mui/material";
 
 function StoredVideos() {
+  const [open, setOpen] = React.useState(false);
   const [videos, setVideos] = React.useState([]);
   React.useEffect(() => {
     shutterstockService.getVideosById({ids: DB.getInstance().videos}).then((res: any) => {
@@ -15,11 +17,11 @@ function StoredVideos() {
 
   const handleVideoClick = (videoId) => {
     DB.getInstance().videos = DB.getInstance().videos.filter(video => video !== videoId);
-    alert(`Video with id: ${videoId} removed succesfully!`);
     shutterstockService.getVideosById({ids: DB.getInstance().videos}).then((res: any) => {
       const data = res.data;
       setVideos(data);
-    })
+    });
+    setOpen(true);
   }
 
   const renderedVideos = videos.map((video: any, index) => {
@@ -33,7 +35,14 @@ function StoredVideos() {
         <Delete/>
       </div>
     </div>
-  })
+  });
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   return (
     <div className="App">
@@ -43,6 +52,14 @@ function StoredVideos() {
           {renderedVideos}
         </div>
       </div>
+      <Snackbar open={open}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                autoHideDuration={6000}
+                onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
+          Video removed successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

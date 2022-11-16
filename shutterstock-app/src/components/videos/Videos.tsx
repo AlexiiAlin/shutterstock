@@ -4,8 +4,10 @@ import shutterstockService from '../../services/shutterstock.service';
 import {DebounceInput} from 'react-debounce-input';
 import DB from "../../services/db.service";
 import {Add} from "@mui/icons-material";
+import {Alert, Snackbar} from "@mui/material";
 
 function Videos() {
+  const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState('');
   const [videos, setVideos] = React.useState([]);
 
@@ -31,7 +33,7 @@ function Videos() {
       return;
     }
     DB.getInstance().videos = [...DB.getInstance().videos, videoId];
-    alert(`Video with id: ${videoId} added succesfully!`);
+    setOpen(true);
   }
 
   const renderedVideos = videos.map((video: any, index) => {
@@ -45,7 +47,14 @@ function Videos() {
         <Add/>
       </div>
     </div>
-  })
+  });
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   return (
     <div className="App">
@@ -64,6 +73,14 @@ function Videos() {
           {renderedVideos}
         </div>
       </div>
+      <Snackbar open={open}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                autoHideDuration={6000}
+                onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
+          Video added successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

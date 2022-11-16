@@ -3,8 +3,10 @@ import '../../App.css';
 import shutterstockService from '../../services/shutterstock.service';
 import {DebounceInput} from 'react-debounce-input';
 import DB from "../../services/db.service";
+import {Alert, Snackbar} from "@mui/material";
 
 function Images() {
+  const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState('');
   const [images, setImages] = React.useState([]);
 
@@ -30,7 +32,7 @@ function Images() {
       return;
     }
     DB.getInstance().images = [...DB.getInstance().images, imageId];
-    alert(`Image with id: ${imageId} added succesfully!`);
+    setOpen(true);
   }
 
   const renderedImages = images.map((image: any, index) => {
@@ -49,7 +51,14 @@ function Images() {
         alt="new"
       />
     </div>
-  })
+  });
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   return (
     <div className="App">
@@ -68,6 +77,14 @@ function Images() {
           {renderedImages}
         </div>
       </div>
+      <Snackbar open={open}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                autoHideDuration={6000}
+                onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
+          Image added successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
