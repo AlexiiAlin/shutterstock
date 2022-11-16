@@ -10,6 +10,19 @@ const getImages = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
+const getImagesByIds = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const queryParams = {
+            'view': "minimal" // String | Amount of detail to render in the response
+        };
+        const payload = req.query.ids ? (req.query.ids as any).split(',') : [];
+        const { data } = await Shutterstock.getInstance().imagesApi.getImageList(payload, queryParams)
+        return res.status(200).json(data);
+    } catch (e) {
+        return res.status(500).json(e);
+    }
+};
+
 
 const getTracks = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -29,4 +42,4 @@ const getVideos = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-export default { getImages, getTracks, getVideos };
+export default { getImages, getImagesByIds, getTracks, getVideos };

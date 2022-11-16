@@ -3,19 +3,22 @@ import http from 'http';
 import express, { Express } from 'express';
 import morgan from 'morgan';
 import routes from './routes';
+import cors from 'cors';
 import Shutterstock from './shutterstock';
 
-const router: Express = express();
+const app: Express = express();
 
 /** Logging */
-router.use(morgan('dev'));
+app.use(morgan('dev'));
 /** Parse the request */
-router.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 /** Takes care of JSON data */
-router.use(express.json());
+app.use(express.json());
+app.use(cors());
+
 
 /** RULES OF OUR API */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     // set the CORS policy
     res.header('Access-Control-Allow-Origin', '*');
     // set the CORS headers
@@ -29,10 +32,10 @@ router.use((req, res, next) => {
 });
 
 /** Routes */
-router.use('/', routes);
+app.use('/', routes);
 
 /** Error handling */
-router.use((req, res, next) => {
+app.use((req, res, next) => {
     const error = new Error('not found');
     return res.status(404).json({
         message: error.message
@@ -40,7 +43,7 @@ router.use((req, res, next) => {
 });
 
 /** Server */
-const httpServer = http.createServer(router);
+const httpServer = http.createServer(app);
 const PORT: any = process.env.PORT ?? 6060;
 httpServer.listen(PORT, () => console.log(`The server is running on port ${PORT}`));
 

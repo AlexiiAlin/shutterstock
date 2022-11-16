@@ -2,6 +2,7 @@ import React from 'react';
 import '../../App.css';
 import shutterstockService from '../../services/shutterstock.service';
 import {DebounceInput} from 'react-debounce-input';
+import DB from "../../services/db.service";
 
 function Images() {
   const [query, setQuery] = React.useState('');
@@ -23,12 +24,21 @@ function Images() {
     }
   }
 
+  const handleImageClick = (imageId) => {
+    if (DB.getInstance().images.find(image => image === imageId)) {
+      alert('Image is already in the DB!');
+      return;
+    }
+    DB.getInstance().images = [...DB.getInstance().images, imageId];
+    alert(`Image with id: ${imageId} added succesfully!`);
+  }
+
   const renderedImages = images.map((image: any, index) => {
     if (!(image && image.assets && image.assets.preview)) {
       return null
     }
     const {url, height, width} = image.assets.preview;
-    return <div key={index} className='image-wrapper'>
+    return <div key={index} className='image-wrapper' onClick={() => handleImageClick(image.id)}>
       <img
         src={url}
         width={width}
@@ -40,7 +50,7 @@ function Images() {
 
   return (
     <div className="App">
-      <h6>Images</h6>
+      <h6>Images (click an image to add to DB)</h6>
       <DebounceInput
         className="query-input"
         minLength={2}

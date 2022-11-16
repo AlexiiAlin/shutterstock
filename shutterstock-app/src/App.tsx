@@ -10,6 +10,7 @@ import Images from "./components/images/Images";
 import Videos from "./components/videos/Videos";
 import Tracks from "./components/tracks/Tracks";
 import {AppBar, Toolbar, Typography} from "@mui/material";
+import StoredImages from "./components/images/StoredImages";
 
 export default function App() {
   return (
@@ -18,6 +19,9 @@ export default function App() {
         <Toolbar className="toolbar">
           <Typography variant="h6" component="div">
             <Link to="/">Images</Link>
+          </Typography>
+          <Typography variant="h6" component="div">
+            <Link to="/stored-images">Stored images</Link>
           </Typography>
           <Typography variant="h6" component="div">
             <Link to="/videos">Videos</Link>
@@ -31,6 +35,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Images/>} />
           <Route path="/images" element={<Images/>} />
+          <Route path="/stored-images" element={<StoredImages/>} />
           <Route path="/videos" element={<Videos/>} />
           <Route path="/tracks" element={<Tracks/>} />
         </Routes>

@@ -50,6 +50,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .query-input {
@@ -64,7 +65,7 @@ h6 {
   color: white !important;
   text-underline: none !important;
   display: flex;
-  gap: 8px;
+  gap: 24px;
 }
 a, a:link, a:visited, a:focus, a:hover, a:active{
   color: inherit;
