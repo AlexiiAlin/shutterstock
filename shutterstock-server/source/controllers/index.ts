@@ -33,8 +33,6 @@ const getTracks = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-
-
 const getTracksByIds = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const queryParams = {
@@ -57,4 +55,17 @@ const getVideos = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-export default { getImages, getImagesByIds, getTracks, getVideos, getTracksByIds };
+const getVideosByIds = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const queryParams = {
+            'view': "minimal" // String | Amount of detail to render in the response
+        };
+        const payload = req.query.ids ? (req.query.ids as any).split(',') : [];
+        const { data } = await Shutterstock.getInstance().videosApi.getVideoList(payload, queryParams)
+        return res.status(200).json(data);
+    } catch (e) {
+        return res.status(500).json(e);
+    }
+};
+
+export default { getImages, getImagesByIds, getTracks, getTracksByIds, getVideos, getVideosByIds };

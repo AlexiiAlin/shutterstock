@@ -25,7 +25,7 @@ function Tracks() {
   }
 
   const handleTrackClick = (trackId) => {
-    if (DB.getInstance().tracks.find(image => image === trackId)) {
+    if (DB.getInstance().tracks.find(track => track === trackId)) {
       alert('Track is already in the DB!');
       return;
     }

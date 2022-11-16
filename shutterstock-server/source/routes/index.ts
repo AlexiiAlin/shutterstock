@@ -7,5 +7,6 @@ router.get('/images-by-ids', controller.getImagesByIds);
 router.get('/tracks', controller.getTracks);
 router.get('/tracks-by-ids', controller.getTracksByIds);
 router.get('/videos', controller.getVideos);
+router.get('/videos-by-ids', controller.getVideosByIds);
 
 export = router;

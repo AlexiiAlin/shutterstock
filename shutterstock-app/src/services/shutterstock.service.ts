@@ -31,6 +31,12 @@ class ShutterstockService {
     const url = queryParams ? `/videos?${queryParams}` : '/videos';
     return http.get<[]>(url);
   }
+
+  getVideosById(params) {
+    const queryParams = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+    const url = queryParams ? `/videos-by-ids?${queryParams}` : '/videos-by-ids';
+    return http.get<[]>(url);
+  }
 }
 
 export default new ShutterstockService();
