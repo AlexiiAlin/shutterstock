@@ -28,7 +28,7 @@ function Videos() {
       return null
     }
     const {url, height, width} = video.assets.preview_mp4;
-    return <div key={index} className='image-wrapper'>
+    return <div key={index} className='item-wrapper'>
       <a href={url} target="_blank">Video {index + 1}</a>
     </div>
   })
@@ -46,7 +46,7 @@ function Videos() {
       />
 
       <div className="App-content">
-        <div className='images'>
+        <div className='items'>
           {renderedVideos}
         </div>
       </div>

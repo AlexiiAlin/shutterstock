@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../App.css';
 import shutterstockService from '../../services/shutterstock.service';
-import {DebounceInput} from 'react-debounce-input';
 import DB from "../../services/db.service";
 
 function StoredImages() {
@@ -27,7 +26,10 @@ function StoredImages() {
       return null
     }
     const {url, height, width} = image.assets.preview;
-    return <div key={index} className='image-wrapper' onClick={() => handleImageClick(image.id)}>
+    return <div key={index}
+                className='item-wrapper'
+                style={{cursor: 'pointer'}}
+                onClick={() => handleImageClick(image.id)}>
       <img
         src={url}
         width={width}
@@ -41,7 +43,7 @@ function StoredImages() {
     <div className="App">
       <h6>Images by DB ids (click an image to remove)</h6>
       <div className="App-content">
-        <div className='images'>
+        <div className='items'>
           {renderedImages}
         </div>
       </div>

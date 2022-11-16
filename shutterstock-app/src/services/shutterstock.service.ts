@@ -13,6 +13,13 @@ class ShutterstockService {
     return http.get<[]>(url);
   }
 
+
+  getTracksById(params) {
+    const queryParams = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+    const url = queryParams ? `/tracks-by-ids?${queryParams}` : '/tracks-by-ids';
+    return http.get<[]>(url);
+  }
+
   getTracks(params) {
     const queryParams = Object.keys(params).map(key => key + '=' + params[key]).join('&');
     const url = queryParams ? `/tracks?${queryParams}` : '/tracks';

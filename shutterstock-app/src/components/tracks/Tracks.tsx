@@ -2,6 +2,8 @@ import React from 'react';
 import '../../App.css';
 import shutterstockService from '../../services/shutterstock.service';
 import {DebounceInput} from 'react-debounce-input';
+import DB from "../../services/db.service";
+import {Add} from "@mui/icons-material";
 
 function Tracks() {
   const [query, setQuery] = React.useState('');
@@ -22,13 +24,25 @@ function Tracks() {
     }
   }
 
+  const handleTrackClick = (trackId) => {
+    if (DB.getInstance().tracks.find(image => image === trackId)) {
+      alert('Track is already in the DB!');
+      return;
+    }
+    DB.getInstance().tracks = [...DB.getInstance().tracks, trackId];
+    alert(`Track with id: ${trackId} added succesfully!`);
+  }
+
   const renderedTracks = tracks.map((track: any, index) => {
     if (!(track && track.assets && track.assets.preview_mp3)) {
-      return null
+      return null;
     }
-    const {url, height, width} = track.assets.preview_mp3;
-    return <div key={index} className='image-wrapper'>
-      <a href={url} target="_blank">Track {index + 1}</a>
+    const {url} = track.assets.preview_mp3;
+    return <div key={index} className='item-wrapper'>
+      <a href={url} target="_blank">{track.title}</a>
+      <div className="action-wrapper" onClick={() => {handleTrackClick(track.id)}}>
+        <Add/>
+      </div>
     </div>
   })
 
@@ -45,7 +59,7 @@ function Tracks() {
       />
 
       <div className="App-content">
-        <div className='images'>
+        <div className='items' style={{flexDirection: 'column'}}>
           {renderedTracks}
         </div>
       </div>

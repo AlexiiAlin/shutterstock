@@ -38,7 +38,10 @@ function Images() {
       return null
     }
     const {url, height, width} = image.assets.preview;
-    return <div key={index} className='image-wrapper' onClick={() => handleImageClick(image.id)}>
+    return <div key={index}
+                className='item-wrapper'
+                style={{cursor: 'pointer'}}
+                onClick={() => handleImageClick(image.id)}>
       <img
         src={url}
         width={width}
@@ -61,7 +64,7 @@ function Images() {
       />
 
       <div className="App-content">
-        <div className='images'>
+        <div className='items'>
           {renderedImages}
         </div>
       </div>
