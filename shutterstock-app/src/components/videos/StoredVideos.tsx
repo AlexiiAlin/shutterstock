@@ -20,8 +20,8 @@ function StoredVideos() {
     shutterstockService.getVideosById({ids: DB.getInstance().videos}).then((res: any) => {
       const data = res.data;
       setVideos(data);
+      setOpen(true);
     });
-    setOpen(true);
   }
 
   const renderedVideos = videos.map((video: any, index) => {
@@ -54,7 +54,7 @@ function StoredVideos() {
       </div>
       <Snackbar open={open}
                 anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                autoHideDuration={6000}
+                autoHideDuration={1000}
                 onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
           Video removed successfully!

@@ -79,7 +79,7 @@ function Images() {
       </div>
       <Snackbar open={open}
                 anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                autoHideDuration={6000}
+                autoHideDuration={1000}
                 onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
           Image added successfully!

@@ -20,8 +20,8 @@ function StoredTracks() {
     shutterstockService.getTracksById({ids: DB.getInstance().tracks}).then((res: any) => {
       const data = res.data;
       setTracks(data);
+      setOpen(true);
     });
-    setOpen(true);
   }
 
   const renderedTracks = tracks.map((track: any, index) => {
@@ -54,7 +54,7 @@ function StoredTracks() {
       </div>
       <Snackbar open={open}
                 anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                autoHideDuration={6000}
+                autoHideDuration={1000}
                 onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
           Image removed successfully!

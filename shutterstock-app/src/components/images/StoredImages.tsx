@@ -19,8 +19,8 @@ function StoredImages() {
     shutterstockService.getImagesById({ids: DB.getInstance().images}).then((res: any) => {
       const data = res.data;
       setImages(data);
+      setOpen(true);
     });
-    setOpen(true);
   }
 
   const renderedImages = images.map((image: any, index) => {
@@ -58,7 +58,7 @@ function StoredImages() {
       </div>
       <Snackbar open={open}
                 anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                autoHideDuration={6000}
+                autoHideDuration={1000}
                 onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
           Image removed successfully!
